@@ -1,7 +1,10 @@
+import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:minichat/model/message_model.dart';
 import 'package:minichat/services/auth/auth_services.dart';
 import 'package:minichat/services/chat/chat_services.dart';
 import 'package:minichat/utils/consts.dart';
@@ -72,7 +75,7 @@ class _ChatPageState extends State<ChatPage> {
 
   Widget _buildmessageList() {
     String senderId = authservices.getcurrentuser()!.uid;
-    return StreamBuilder(
+    return StreamBuilder<List<Message>>(
         stream: chatservices.receivemessage(widget.receiverID, senderId),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
@@ -82,15 +85,13 @@ class _ChatPageState extends State<ChatPage> {
               child: CircularProgressIndicator(),
             );
           }
-          final List<QueryDocumentSnapshot> document = snapshot.data!.docs;
-
+final messages=snapshot.data!;
           return ListView.builder(
-              itemCount: document.length,
+              itemCount: messages.length,
               itemBuilder: (context, index) {
-                final messages = document[index].data() as Map<String, dynamic>;
-
+final message=messages[index];
                 bool iscurrentUser =
-                    messages['senderId'] == authservices.getcurrentuser()!.uid;
+                                    message.senderId == authservices.getcurrentuser()!.uid;
                 var alignment = iscurrentUser
                     ? Alignment.topRight
                     : Alignment.topLeft;
@@ -102,7 +103,7 @@ class _ChatPageState extends State<ChatPage> {
                         : CrossAxisAlignment.start,
                     children: [
                       ChatBubble(
-                          message: messages['message'],
+                          message: message.message,
                           iscurrentUser: iscurrentUser),
                     ],
                   ),
