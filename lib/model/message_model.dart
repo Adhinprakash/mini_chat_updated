@@ -6,8 +6,9 @@ class Message{
   final String revciverId;
   final String message;
   final  Timestamp timestamp;
+  final String type;
 
-  Message({required this.message, required this.senderId, required this.senderEmail, required this.revciverId, required this.timestamp});
+  Message({required this.message, required this.senderId, required this.senderEmail, required this.revciverId, required this.timestamp,this.type='text'});
   
 
 
@@ -18,7 +19,8 @@ class Message{
       "senderEmail":senderEmail,
       "revciverId":revciverId,
       "message":message,
-      "timestamp":timestamp
+      "timestamp":timestamp,
+      'type':type
    
     };
   }
