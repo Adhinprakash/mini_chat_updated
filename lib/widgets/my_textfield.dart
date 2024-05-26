@@ -4,7 +4,8 @@ class Mytextfield extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
   final FocusNode? focusNode;
-  const Mytextfield({super.key, required this.hintText, required this.controller, this.focusNode});
+  final Future<void> Function()? onPressed;
+  const Mytextfield({super.key, required this.hintText, required this.controller, this.focusNode,  this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,9 @@ class Mytextfield extends StatelessWidget {
                           cursorColor: Colors.black,
                           style: const TextStyle(color: Colors.black),
                           decoration: InputDecoration(
-                              prefixIcon: const Icon(Icons.email_outlined),
+                              prefixIcon: IconButton(onPressed:onPressed
+
+                            , icon: Icon(Icons.email_outlined)),
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10)),
                               labelStyle: const TextStyle(color: Colors.black),

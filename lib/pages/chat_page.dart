@@ -1,4 +1,3 @@
-import 'dart:html';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -55,7 +54,7 @@ class _ChatPageState extends State<ChatPage> {
         centerTitle: true,
         leading: IconButton(onPressed: (){
           Navigator.pop(context);
-        }, icon: Icon(Icons.arrow_back_ios,color: Colors.white,)),
+        }, icon: const Icon(Icons.arrow_back_ios,color: Colors.white,)),
         backgroundColor: primarycolor,
         title: Text(
           
@@ -79,9 +78,9 @@ class _ChatPageState extends State<ChatPage> {
         stream: chatservices.receivemessage(widget.receiverID, senderId),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return Text("failed to load...");
+            return const Text("failed to load...");
           } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
@@ -102,9 +101,13 @@ final message=messages[index];
                         ? CrossAxisAlignment.end
                         : CrossAxisAlignment.start,
                     children: [
-                      ChatBubble(
-                          message: message.message,
-                          iscurrentUser: iscurrentUser),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        child: ChatBubble(
+                          type: message.type,
+                            message: message.message,
+                            iscurrentUser: iscurrentUser),
+                      ),
                     ],
                   ),
                 );
@@ -117,8 +120,9 @@ final message=messages[index];
       children: [
         Expanded(
             child: Padding(
-          padding: const EdgeInsets.only(bottom: 14),
+          padding:  EdgeInsets.only(bottom: 14),
           child: Mytextfield(
+            onPressed: ()=>chatservices.pickimageUpload(widget.receiverID ),
               focusNode: myfocus,
               hintText: "type a message",
               controller: _messagecontroller),

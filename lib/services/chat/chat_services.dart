@@ -1,5 +1,6 @@
+
+
 import 'dart:io';
-import 'dart:js_util';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,7 +16,7 @@ class Chatservices {
   final ImagePicker imagePicker = ImagePicker();
   Future<void> pickimageUpload(String recieverId) async {
     final XFile? image =
-        await imagePicker.pickImage(source: ImageSource.gallery);
+        await imagePicker.pickImage(source: ImageSource.camera);
     if (image != null) {
       await uploadimage(image, recieverId);
     }
@@ -36,6 +37,7 @@ class Chatservices {
     String downloadUrl = await taskSnapshot.ref.getDownloadURL();
 
     Message newmessage = Message(
+      type: 'image',
         message: downloadUrl,
         senderId: currentuserId,
         senderEmail: currentuserEmail!,

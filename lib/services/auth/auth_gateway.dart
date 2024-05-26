@@ -11,7 +11,7 @@ class Authgateway extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder(stream: 
-      FirebaseAuth.instance.authStateChanges()
+      FirebaseAuth. instance.authStateChanges()
       , builder: (context,snapshot){
         if(snapshot.hasData){
           return  ScreenHome();
